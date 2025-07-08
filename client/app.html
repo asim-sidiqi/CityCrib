@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Estimator Form</title>
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="app.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">CityCrib</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+    <div class="heading">
+        <div class="content">
+          <h1 class="animated-text">
+            <span>Housing</span>
+            <span>Price</span>
+            <span>Prediction</span>
+          </h1>
+        </div>
+        <div class="content-line animated-line">
+            <p>Know the Value, Make Smarter Moves.</p>
+        </div>
+    </div>
+    <div class="glass-card">
+        <div class="form-group location-group">
+            <label for="location">Search City:</label>
+            <select id="location">
+              <option value="bangalore">Bangalore</option>
+              <option value="delhi">Delhi NCR</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="kolkata">Kolkata</option>
+            </select>
+          </div>
+      
+          <!-- Duplicate Location Selection -->
+          <div class="form-group location-group">
+            <label for="location2">Search Location:</label>
+            <select id="location2">
+              <option value="bangalore">Bangalore</option>
+              <option value="delhi">Delhi NCR</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="kolkata">Kolkata</option>
+            </select>
+          </div>
+    
+        <div class="form-group">
+          <label for="square-feet">Total Square Feet:</label>
+          <div class="sq-ft-container">
+            <button type="button" id="decrement">-</button>
+            <input type="number" id="square-feet" min="0" placeholder="0">
+            <button type="button" id="increment">+</button>
+          </div>
+        </div>
+    
+        <div class="bhk-bathrooms-container">
+            <div class="form-group">
+              <label for="bathrooms">Number of Bathrooms:</label>
+              <div class="input-container">
+                <button type="button" id="bathroom-decrement">-</button>
+                <input type="number" id="bathrooms" placeholder="0" min="0">
+                <button type="button" id="bathroom-increment">+</button>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="bhks">Number of BHKs:</label>
+              <div class="input-container">
+                <button type="button" id="bhk-decrement">-</button>
+                <input type="number" id="bhks" placeholder="0" min="0">
+                <button type="button" id="bhk-increment">+</button>
+              </div>
+            </div>
+          </div>
+          
+    
+          <div class="submit-container">
+            <button class="submit-btn">Check</button>
+            <div class="estimated-price">Estimated Price:</div>
+            <div class="output-area" id="output-area">0</div>
+          </div>
+      </div>
+    
+    <!-- <div class="form-container">
+        <h3>Price Estimator</h3>
+        <form>
+            <label for="area">Area (Square Feet)</label>
+            <input type="text" id="area" name="area" placeholder="2000">
+
+            <label>BHK</label>
+            <div class="button-group" id="bhk-buttons">
+                <button type="button" class="active">1</button>
+                <button type="button">2</button>
+                <button type="button">3</button>
+                <button type="button">4</button>
+                <button type="button">5</button>
+            </div>
+
+            <label>Bath</label>
+            <div class="button-group" id="bath-buttons">
+                <button type="button">1</button>
+                <button type="button">2</button>
+                <button type="button" class="active">3</button>
+                <button type="button">4</button>
+                <button type="button">5</button>
+            </div>
+
+            <label for="location">Location</label>
+            <select id="location" name="location">
+                <option value="nehru nagar">nehru nagar</option>
+            </select>
+
+            <button type="button" id="estimate-button">Estimate Price</button>
+        </form>
+        <div class="price-display" id="price-display">110.4 Lakh</div>
+    </div> -->
+
+    <!-- Link to your JavaScript file -->
+    <script src="app.js"></script>
+</body>
+</html>
