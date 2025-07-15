@@ -1,22 +1,27 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import util
+
 app = Flask(__name__)
+CORS(app)
 
-@app.route('/gln')
+@app.route('/api/get_location_names', methods=['GET'])
 def get_locations():
-    output = jsonify(util.get_location_names())
-    return output
+    locations = util.get_location_names()
+    return jsonify({ "locations": locations })
 
-@app.route('/elp', methods=['POST'])
+@app.route('/api/predict_home_price', methods=['POST'])
 def predict_estimated_price():
-    location = request.form['location']
-    total_sqft = float(request.form['total_sqft'])
-    bhk = int(request.form['bhk'])
-    bath = int(request.form['bath'])
+    data = request.get_json()
+    location = data['location']
+    total_sqft = float(data['total_sqft'])
+    bhk = int(data['bhk'])
+    bath = int(data['bath'])
 
-    response = jsonify(util.get_estimated_price(location, total_sqft, bhk, bath))
-    return response
+    estimated_price = util.get_estimated_price(location, total_sqft, bath, bhk)
+    return jsonify({ "estimated_price": estimated_price })
 
 if __name__ == "__main__":
     print("Flask server running...")
-    app.run()
+    util.load_artifacts()
+    app.run(debug=True)
