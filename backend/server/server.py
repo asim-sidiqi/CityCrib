@@ -5,6 +5,10 @@ from . import util
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def index():
+    return 'CityCrib backend is running!'
+
 @app.route('/api/get_location_names', methods=['GET'])
 def get_locations():
     city = request.args.get('city')
