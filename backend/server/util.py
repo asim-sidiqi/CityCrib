@@ -11,7 +11,9 @@ def load_artifacts(city):
     if city in city_artifacts:
         return city_artifacts[city]
 
-    base_path = "./artifacts"
+    base_path = os.path.join(os.path.dirname(__file__), "artifacts")
+    if not os.path.exists(base_path):
+        raise FileNotFoundError("Artifacts directory does not exist")
     model_path = os.path.join(base_path, f"{city}_home_prices_model.pickle")
     column_path = os.path.join(base_path, f"columns_{city}.json")
 
