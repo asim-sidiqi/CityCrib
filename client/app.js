@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkButton = document.querySelector(".submit-btn");
 
   function loadLocations(city) {
-    fetch(`http://127.0.0.1:5000/api/get_location_names?city=${city}`)
+    fetch(`https://citycrib.onrender.com/api/get_location_names?city=${city}`)
       .then((res) => res.json())
       .then((data) => {
         const locations = data.locations;
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    fetch("http://127.0.0.1:5000/api/predict_home_price", {
+    fetch("https://citycrib.onrender.com/api/predict_home_price", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
