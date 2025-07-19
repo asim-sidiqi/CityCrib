@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const cityDropdown = document.getElementById("location"); // New
   const locationDropdown = document.getElementById("location2");
   const sqftInput = document.getElementById("square-feet");
   const bathInput = document.getElementById("bathrooms");
@@ -6,25 +7,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const outputArea = document.getElementById("output-area");
   const checkButton = document.querySelector(".submit-btn");
 
-  // Load Bangalore locations
-  fetch("http://127.0.0.1:5000/api/get_location_names")
-    .then((res) => res.json())
-    .then((data) => {
-      const locations = data.locations;
-      locationDropdown.innerHTML = "";
-      locations.forEach((loc) => {
-        const option = document.createElement("option");
-        option.value = loc;
-        option.textContent = loc;
-        locationDropdown.appendChild(option);
+  function loadLocations(city) {
+    fetch(`http://127.0.0.1:5000/api/get_location_names?city=${city}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const locations = data.locations;
+        if (!locations || !Array.isArray(locations)) {
+          throw new Error("Invalid response format: locations not found");
+      }
+        locationDropdown.innerHTML = "";
+        locations.forEach((loc) => {
+          const capitalized = loc
+            .split(" ")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+          const option = document.createElement("option");
+          option.value = loc;
+          option.textContent = capitalized;
+          locationDropdown.appendChild(option);
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to load locations:", err);
+        outputArea.textContent = "Failed to load locations.";
       });
-    })
-    .catch((err) => {
-      console.error("Failed to load locations:", err);
-      outputArea.textContent = "Failed to load locations.";
-    });
+  }
 
-  // Add increment/decrement logic
+  // Load default city (e.g., Bangalore) on page load
+  loadLocations(cityDropdown.value);
+
+  // Reload locations when city changes
+  cityDropdown.addEventListener("change", () => {
+    const selectedCity = cityDropdown.value;
+    loadLocations(selectedCity);
+  });
+
   function setupStepper(inputId, decId, incId) {
     const input = document.getElementById(inputId);
     document.getElementById(decId).addEventListener("click", () => {
@@ -41,14 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
   setupStepper("bathrooms", "bathroom-decrement", "bathroom-increment");
   setupStepper("bhks", "bhk-decrement", "bhk-increment");
 
-  // Submit form and fetch prediction
   checkButton.addEventListener("click", () => {
     const sqft = parseFloat(sqftInput.value);
     const bath = parseInt(bathInput.value);
     const bhk = parseInt(bhkInput.value);
     const location = locationDropdown.value;
+    const city = cityDropdown.value;
 
-    if (!sqft || !bath || !bhk || !location) {
+    if (!sqft || !bath || !bhk || !location || !city) {
       outputArea.textContent = "Please fill in all fields.";
       return;
     }
@@ -57,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        city: city,
         total_sqft: sqft,
         bath: bath,
         bhk: bhk,
